@@ -33,6 +33,10 @@ git commands
 ```
 git init # if no existing repo is being cloned rather we need to make our working directory as a repo
 
+git config --global user.email "email" # to configure the email of the user
+
+git config --global user.name "username" # to set the user name
+
 git add . # to stage the files for commit
 
 git status # to check the status of the files
@@ -41,7 +45,4 @@ git commit -m "message" # to commit the changes locally
 
 git push origin main # to push the changes in the github repository
 
-git config --global user.email "email" # to configure the email of the user
-
-git config --global user.name "username" # to set the user name
 ```
