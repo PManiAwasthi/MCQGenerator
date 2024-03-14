@@ -19,9 +19,6 @@ key=os.getenv("OPENAI_API_KEY")
 llm = ChatOpenAI(openai_api_key=key, model_name="gpt-3.5-turbo", temperature=0.7)
 
 
-with open("D:\Projects to practice\MCQGenerator\Response.json","r") as f:
-    RESPONSE_JSON = json.load(f)
-
 TEMPLATE="""
 Text:{text}
 You are an expert MCQ maker. Given the above text, it is your job to \
@@ -61,27 +58,3 @@ quiz_evaluation_prompt=PromptTemplate(
 review_chain=LLMChain(llm=llm, prompt=quiz_evaluation_prompt, output_key="review", verbose=True)
 
 generate_evaluate_chain=SequentialChain(chains=[quiz_chain, review_chain], input_variables=["text", "number", "subject", "tone", "RESPONSE_JSON"], output_variables=["quiz", "review"], verbose=True)
-
-PATH="D:\Projects to practice\MCQGenerator\data.txt"
-
-with open(PATH, "r") as file:
-    TEXT=file.read()
-
-generate_evaluate_chain=SequentialChain(chains=[quiz_chain, review_chain], input_variables=["text", "number", "subject", "tone", "RESPONSE_JSON"], output_variables=["quiz", "review"], verbose=True)
-
-NUMBER=5
-SUBJECT="AI"
-TONE="Simple",
-RESPONSE_JSON=RESPONSE_JSON
-
-with get_openai_callback() as cb:
-    response=generate_evaluate_chain({
-        "text":TEXT, 
-        "number":NUMBER, 
-        "subject":SUBJECT, 
-        "tone":TONE, 
-        "RESPONSE_JSON":json.dumps(RESPONSE_JSON)
-        }
-    )
-
-print(response)
